@@ -20,10 +20,19 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get one product
 
+//TODO Fix this one.  It will pull category or tag but not both.
   //TODO find a single product by its `id`
   // be sure to include its associated Category and Tag data
-router.get('/:id', (req, res) => {
-
+  router.get('/:id', async (req, res) =>{
+    try {
+      const { id } = req.params;  
+      const data = await Product.findByPk(id, {
+          include: [{model: Category }, {model: Tag}],
+        });
+        res.json(data);
+    } catch(err) {
+        res.json(err);
+    } 
 });
 
 // create new product

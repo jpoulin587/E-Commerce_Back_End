@@ -16,10 +16,18 @@ const { Category, Product } = require('../../models');
     } 
 });
 
-  //TODO find one category by its `id` value
+  //DONE find one category by its `id` value
   // be sure to include its associated Products
-router.get('/:id', (req, res) => {
-
+  router.get('/:id', async (req, res) =>{
+    try {
+      const { id } = req.params;  
+      const data = await Category.findByPk(id, {
+          include: [{ model: Product }],
+        });
+        res.json(data);
+    } catch(err) {
+        res.json(err);
+    } 
 });
 
   // TODO create a new category

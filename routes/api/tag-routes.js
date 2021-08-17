@@ -18,8 +18,16 @@ const { Tag, Product, ProductTag } = require('../../models');
 
   //TODO find a single tag by its `id`
   // be sure to include its associated Product data
-router.get('/:id', (req, res) => {
-
+  router.get('/:id', async (req, res) =>{
+    try {
+      const { id } = req.params;  
+      const data = await Tag.findByPk(id, {
+          include: [{ model: Product }],
+        });
+        res.json(data);
+    } catch(err) {
+        res.json(err);
+    } 
 });
 
   //TODO create a new tag
