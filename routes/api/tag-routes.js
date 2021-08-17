@@ -16,7 +16,7 @@ const { Tag, Product, ProductTag } = require('../../models');
     } 
 });
 
-  //TODO find a single tag by its `id`
+  //DONE find a single tag by its `id`
   // be sure to include its associated Product data
   router.get('/:id', async (req, res) =>{
     try {
@@ -30,19 +30,36 @@ const { Tag, Product, ProductTag } = require('../../models');
     } 
 });
 
-  //TODO create a new tag
-router.post('/', (req, res) => {
-
+  //DONE create a new tag
+  router.post('/', async (req,res) => {
+    try {
+        await Tag.create(req.body);
+        res.json({message: "Tag created!"});
+    } catch(err) {
+        res.json(err);
+    }
 });
 
-  //TODO update a tag's name by its `id` value
-router.put('/:id', (req, res) => {
+  //DONE update a tag's name by its `id` value
+  router.put('/:id', async (req,res) => {
+    const { id } = req.params;
+    try {
+      await Tag.update(req.body, {where: { id } });
+        res.json({message: "Tag updated!"});
+    } catch(err) {
+        res.json(err);
+    }
+  });
 
-});
-
-  //TODO delete on tag by its `id` value
-router.delete('/:id', (req, res) => {
-
-});
+  //DONE delete on tag by its `id` value
+  router.delete('/:id', async (req,res) => {
+    const { id } = req.params;
+    try {
+        const result = await Tag.destroy({where: { id } });
+        res.json(result);
+    } catch(err) {
+        res.json(err);
+    }
+  });
 
 module.exports = router;
