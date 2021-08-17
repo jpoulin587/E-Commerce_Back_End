@@ -30,19 +30,37 @@ const { Category, Product } = require('../../models');
     } 
 });
 
-  // TODO create a new category
-router.post('/', (req, res) => {
-
+  //DONE create a new category
+  router.post('/', async (req,res) => {
+    try {
+        await Category.create(req.body);
+        res.json({message: "Category created!"});
+    } catch(err) {
+        res.json(err);
+    }
 });
 
- //TODO update a category by its `id` value
-router.put('/:id', (req, res) => {
- 
+ //DONE update a category by its `id` value
+ router.put('/:id', async (req,res) => {
+  const { id } = req.params;
+  try {
+    await Category.update(req.body, {where: { id } });
+      res.json({message: "Category updated!"});
+  } catch(err) {
+      res.json(err);
+  }
 });
 
- // TODO delete a category by its `id` value
-router.delete('/:id', (req, res) => {
- 
+ // DONE delete a category by its `id` value
+ router.delete('/:id', async (req,res) => {
+  const { id } = req.params;
+  try {
+      const result = await Category.destroy({where: { id } });
+      res.json(result);
+  } catch(err) {
+      res.json(err);
+  }
 });
+
 
 module.exports = router;
