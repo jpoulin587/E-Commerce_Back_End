@@ -20,8 +20,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get one product
 
-//TODO Fix this one.  It will pull category or tag but not both.
-  //TODO find a single product by its `id`
+  //DONE find a single product by its `id`
   // be sure to include its associated Category and Tag data
   router.get('/:id', async (req, res) =>{
     try {
@@ -35,10 +34,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
     } 
 });
 
-// create new product
-
-
-router.post('/', (req, res) => {
+//create new product
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -48,7 +44,7 @@ router.post('/', (req, res) => {
     }
   */
 
-
+router.post('/', (req, res) => {
     Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
